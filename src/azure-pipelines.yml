@@ -1,0 +1,20 @@
+trigger:
+  - main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.12'
+    displayName: 'Set up Python'
+
+  - script: |
+      python -m pip install --upgrade pip
+      pip install -r src/requirements.txt
+    displayName: 'Install dependencies'
+
+  - script: |
+      python -m pytest -v src/test_app.py
+    displayName: 'Run automated tests'
